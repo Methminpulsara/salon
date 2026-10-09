@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  
+  --color-warm-ivory: #FAF7F2;
+  --color-deep-espresso: #2C1810;
+  --color-rich-charcoal: #1A1A1A;
+  --color-muted-rose: #C4A882;
+  --color-cream: #F5EDE4;
+  --color-dark-surface: #0D0D0D;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --easing-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --easing-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.lenis, html.lenis body {
+  height: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-warm-ivory);
+  color: var(--color-rich-charcoal);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Cursor */
+.cursor-dot,
+.cursor-ring,
+.cursor-text {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #ffffff;
+}
+
+.cursor-ring {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #ffffff;
+}
+
+.cursor-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #000000;
+  background-color: #ffffff;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.cursor-active .cursor-text {
+  opacity: 1;
+}
+
+.cursor-active .cursor-dot,
+.cursor-active .cursor-ring {
+  opacity: 0;
+}
+
+.text-mask-wrapper {
+  overflow: hidden;
+  display: block;
+}
+
+.text-mask-inner {
+  display: block;
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
 }
